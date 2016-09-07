@@ -15,8 +15,11 @@ Current state:
 
 *All 2D arts are not mine and freely available. If you see something here that shouldn't be publicly available, please contact me.*
 Credits:
+
 tsukiyomaru0 (http://cutstuff.net/forum/index.php?topic=5024.0)
+
 Ben Johnson  (http://www.learnpygame.com/2014/07/items-sounds-and-backgrounds-pygame2.html)
+
 MillionthVector (http://millionthvector.blogspot.fr/p/free-sprites.html)
 
 
