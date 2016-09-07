@@ -48,7 +48,7 @@ public class ObjectPooler : MonoBehaviour {
 
 		for (i = 0; i < instance.prefabs.Count; i++) 
 		{
-			if ( instance.prefabs[i].name == obj.name ) //Yup, this work in C# ...
+			if ( instance.prefabs[i].name == obj.name )
 			{
 				matchFound = true;
 				break;

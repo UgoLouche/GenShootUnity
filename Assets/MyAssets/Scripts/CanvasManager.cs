@@ -22,5 +22,10 @@ public class CanvasManager : MonoBehaviour {
 		
 		transform.FindChild ("MultiplierBoard").gameObject.GetComponent<Text> ().text =
 			"X" + GameManager.GetInstance ().Multiplier ();
+
+        transform.FindChild("HealthBar").gameObject.GetComponent<RectTransform>().localScale =
+           new Vector3(1, (float)(GameManager.GetInstance().getPlayer().GetHealth()) / (float)(GameManager.GetInstance().getPlayer().healthPool), 1);
+
+        Debug.Log((float)(GameManager.GetInstance().getPlayer().GetHealth()));
 	}
 }

@@ -11,8 +11,8 @@ public abstract class Loot : MonoBehaviour, ProximityAware, PoolableObject
 
 	public void OnTriggerProximity(Collider2D other)
 	{
-		if (!isMagnet && other.gameObject.CompareTag ("Player"))
-			isMagnet = true;
+        if (!isMagnet && other.gameObject.CompareTag("Player"))
+            SetMagnet(true);
 	}
 
 	public int GetPoolID()
@@ -59,5 +59,11 @@ public abstract class Loot : MonoBehaviour, ProximityAware, PoolableObject
 	}
 
 	protected abstract void Reward();
+
+    private void SetMagnet(bool magnetState)
+    {
+        if ((isMagnet = magnetState) == true)
+            speed *= 2;
+    }
 }
 

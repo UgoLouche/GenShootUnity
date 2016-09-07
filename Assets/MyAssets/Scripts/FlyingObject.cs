@@ -67,6 +67,11 @@ public abstract class FlyingObject : MonoBehaviour, PoolableObject, DamageableOb
 		return currentHp;
 	}
 
+    public int GetHealth()
+    {
+        return currentHp;
+    }
+
 	public void Explode()
 	{
 		GameObject newExplosion;

@@ -15,7 +15,7 @@ public class EnemyShip : Spaceship
 	protected override void OnExplode()
 	{
 		GameManager.GetInstance ().AddPoint (pointValue);
-		lootTable.SpawnLoot (transform);
+		if (lootTable != null) lootTable.SpawnLoot (transform);
 
 		base.OnExplode ();
 	}
