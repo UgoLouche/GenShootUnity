@@ -53,6 +53,13 @@ public class GameManager : MonoBehaviour {
 		return playerScore;
 	}
 
+    public float AddMultiplier(float mult)
+    {
+        playerMultiplier += mult;
+
+        return playerMultiplier;
+    }
+
 	public float Score()
 	{
 		return playerScore;

@@ -24,8 +24,6 @@ public class CanvasManager : MonoBehaviour {
 			"X" + GameManager.GetInstance ().Multiplier ();
 
         transform.FindChild("HealthBar").gameObject.GetComponent<RectTransform>().localScale =
-           new Vector3(1, (float)(GameManager.GetInstance().getPlayer().GetHealth()) / (float)(GameManager.GetInstance().getPlayer().healthPool), 1);
-
-        Debug.Log((float)(GameManager.GetInstance().getPlayer().GetHealth()));
+           new Vector3(1, (float)(GameManager.GetInstance().getPlayer().GetHealth()) / (float)(GameManager.GetInstance().getPlayer().healthPool), 1); //NB: avoid move from setting Pivot to 0,0
 	}
 }

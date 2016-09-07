@@ -20,7 +20,11 @@ public class LootTable : MonoBehaviour
 	{
 		GameObject item = ObjectPooler.GetObject (lootList [i].name);
 
-		item.transform.position = t.position;
+        //Add a small random scatter and kill third dimension
+        Vector3 scatterPos = Random.onUnitSphere * 0.5f;
+        scatterPos.z = 0;
+
+        item.transform.position = t.position + scatterPos;
 		item.tag = "Loot";
 	}
 }
