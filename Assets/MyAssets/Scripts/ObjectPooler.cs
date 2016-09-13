@@ -162,31 +162,31 @@ public class ObjectPooler : MonoBehaviour {
 	{
 		GameObject tmp;
 
-		if (instance.poolsSizes.Count < i) //Something is serously wrong here
+		if (poolsSizes.Count < i) //Something is serously wrong here
 		{
-			Debug.Log("initPool: argument was " + i + "but poolsSizes' size is " + instance.poolsSizes.Count + 
+			Debug.Log("initPool: argument was " + i + "but poolsSizes' size is " + poolsSizes.Count + 
 			          " something is seriously wrong here");
 			return;
 		}
 
-		if (instance.pooledObjects.Count < i) //Something is serously wrong here
+		if (pooledObjects.Count < i) //Something is serously wrong here
 		{
-			Debug.Log("initPool: argument was " + i + "but pooledObjects' size is " + instance.poolsSizes.Count + 
+			Debug.Log("initPool: argument was " + i + "but pooledObjects' size is " + poolsSizes.Count + 
 			          " something is seriously wrong here");
 			return;
 		}
 
-		if (instance.poolsSizes.Count == i) //The entry does not exist yet, create it
-			instance.poolsSizes.Add(instance.defaultPoolSize);
+		if (poolsSizes.Count == i) //The entry does not exist yet, create it
+			poolsSizes.Add(defaultPoolSize);
 
 
-		if (instance.pooledObjects.Count == i) //The entry does not exist yet, create it
-			instance.pooledObjects.Add (new Stack<GameObject> ());
+		if (pooledObjects.Count == i) //The entry does not exist yet, create it
+			pooledObjects.Add (new Stack<GameObject> ());
 
-		for (int j = 0; j < instance.poolsSizes[i]; j++) 
+		for (int j = 0; j < poolsSizes[i]; j++) 
 		{
-			tmp = Instantiate(instance.prefabs[i]);
-			tmp.name = instance.prefabs[i].name;
+			tmp = Instantiate(prefabs[i]);
+			tmp.name = prefabs[i].name;
 			PoolObject(tmp);
 		}
 	}

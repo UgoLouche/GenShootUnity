@@ -7,14 +7,26 @@ public class GameManager : MonoBehaviour {
 	
 	public float width;
 	public float height;
+
+    public MenuScript menuCanvas;
 	
 	private float xMax, xMin, yMax, yMin;
 
 	private float playerScore = 0;
 	private float playerMultiplier = 1;
+    private bool pauseStatus = false;
 
 	private PlayerShip player = null;
 	
+
+    protected void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            PauseSwitch();
+        }
+    }
+
 	public static GameManager GetInstance()
 	{
 		return instance;
@@ -89,4 +101,20 @@ public class GameManager : MonoBehaviour {
 	{
 		return yMin;
 	}
+
+    public void PauseSwitch()
+    {
+        pauseStatus = !pauseStatus;
+
+        if (pauseStatus)
+        {
+            Time.timeScale = 0;
+            menuCanvas.turnOn();
+        }
+        else
+        {
+            Time.timeScale = 1;
+            menuCanvas.turnOff();
+        }
+    }
 }

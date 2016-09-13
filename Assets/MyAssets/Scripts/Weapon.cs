@@ -1,13 +1,16 @@
 using UnityEngine;
 using System.Collections;
+using System;
 
-public abstract class Weapon : MonoBehaviour
+public abstract class Weapon : MonoBehaviour, PoolableObject
 {
 	public float[] turretPattern;
 	public float reloadTime;
 
 	private float nextShot = 0;
 	private int turretIndice = 0;
+
+    private int poolID = -1;
 
 
 	public abstract void Fire();
@@ -65,6 +68,12 @@ public abstract class Weapon : MonoBehaviour
 		//Debug.Log ("---" + turretPattern [turretIndice % turretPattern.Length] + "---" + turretIndice);
 	}
 
+    public int GetPoolID()
+    {
+        if (poolID == -1)
+            ObjectPooler.RequestID(this.gameObject);
 
+        return poolID;
+    }
 }
 
