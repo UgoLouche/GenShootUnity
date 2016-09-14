@@ -15,9 +15,11 @@ public enum Subsystem : int
     ENGINE = 9
 };
 
-public enum WeaponType
+public enum WeaponType : int
 {
-    REPEATER
+    NONE = 0,
+    REPEATER = 1,
+    SHOTGUN = 2
 };
 
 public class PlayerManager : MonoBehaviour {
@@ -26,81 +28,101 @@ public class PlayerManager : MonoBehaviour {
     public PlayerShip player;
 
     //Money
-    public int money;
+    public float money;
 
     //Ship
     public float shieldRechargeDelay_Base;
-    public int shieldRechargeDelay_Level;
-    public int shieldRechargeDelay_UpgradeCost;
-
     public float shieldRechargeRate_Base;
-    public int shieldRechargeRate_Level;
-    public int shieldRechargeRate_UpgradeCost;
-
     public float maxShield_Base;
-    public int maxShield_Level;
-    public int maxShield_UpgradeCost;
-
     public float maxHealth_Base;
-    public int maxHealth_Level;
-    public int maxHealth_UpgradeCost;
+    public float speed_Base;
+
+    private float[] upgradeCosts = { //The five first values are not used see the weapon specific table instead
+    0, //Main
+    0, //TLeft
+    0, //TRight
+    0, //BLeft
+    0, //BRight
+    0, //Shield Delay
+    0, //Shield Rate
+    0, //MaxShield
+    0, //Max Heatlth
+    0  //Engine
+    };
+
+    private int[] subLevels = {
+    0, //Main
+    0, //TLeft
+    0, //TRight
+    0, //BLeft
+    0, //BRight
+    0, //Shield Delay
+    0, //Shield Rate
+    0, //MaxShield
+    0, //Max Heatlth
+    0  //Engine
+    };
+
 
     //Guns - Main, TLeft, TRight, BLeft, BRight
-    public int[] repeatersLevel;
-    public int repeater_UgradeCost;
+    public WeaponType[] activeWeapon;
 
-    //Add other guns type here
+    private int[,] weaponsLevels =
+    {
+        { 0, 0, 0, 0, 0 }, //NONE
+        { 1, 0, 0, 0, 0 }, //REPEATER
+        { 0, 0, 0, 0, 0 }  //SHOTGUN
+    };
 
-    //Propulsion
-    public int engineLevel;
-    public int engine_UpgradeCost;
+    private float[] weaponUpgradeCosts =
+    {
+        0,  //NONE
+        10, //REPEATER
+        50  //SHOTGUN
+    };
+
+
+
 
 
 
     //METHOD
-    //SPecify weapon if referring to a weapon subsystem
-    public int getSubLevel(Subsystem sub, WeaponType weapon = WeaponType.REPEATER)
+    public bool isUpgradable(Subsystem sub, WeaponType weapon = WeaponType.NONE)
     {
-        switch(sub)
-        {
-            case Subsystem.ENGINE:
-                return engineLevel;
+        if (money < getUpgradeCost(sub, weapon) || getSubLevel(sub, weapon) >= 10) return false;
+        else return true;
+    }
 
-            case Subsystem.HEALTH_MAX:
-                return maxHealth_Level;
+    public void Upgrade(Subsystem sub, WeaponType weapon = WeaponType.NONE)
+    {
+        if (weapon != WeaponType.NONE)
+            weaponsLevels[(int)weapon, (int)sub]++;
+        else
+            subLevels[(int)sub]++;
 
-            case Subsystem.SHIELD_MAX:
-                return maxShield_Level;
+        money -= getUpgradeCost(sub, weapon);
+        updatePlayer(sub, weapon);
+    }
 
-            case Subsystem.SHIELD_RATE:
-                return shieldRechargeRate_Level;
+    //Specify weapon if referring to a weapon subsystem
+    public int getSubLevel(Subsystem sub, WeaponType weapon = WeaponType.NONE)
+    {
+        if (weapon != WeaponType.NONE)
+            return weaponsLevels[(int)weapon, (int)sub];
+        else
+            return subLevels[(int)sub];
+    }
 
-            case Subsystem.SHIELD_DELAY:
-                return shieldRechargeDelay_Level;
-
-            case Subsystem.GUN_BRIGHT:
-            case Subsystem.GUN_BLEFT:
-            case Subsystem.GUN_TRIGHT:
-            case Subsystem.GUN_TLEFT:
-            case Subsystem.GUN_MAIN:
-                switch(weapon)
-                {
-                    case WeaponType.REPEATER:
-                        return repeatersLevel[(int)sub];
-                    default:
-                        Debug.Log("Unknown Weapon type");
-                        return 0;
-                }
-            default:
-                Debug.Log("Unknown Subsystem");
-                return 0;
-        }
+    public bool isWeaponActive(Subsystem sub, WeaponType weapon)
+    {
+        return activeWeapon[(int)sub] == weapon;
     }
 
     public void SetWeapon(Subsystem sub, WeaponType weapon)
     {
         GameObject gunPoint;
         GameObject newGun;
+
 
         switch(sub)
         {
@@ -133,6 +155,14 @@ public class PlayerManager : MonoBehaviour {
         {
             case WeaponType.REPEATER:
                 newGun = ObjectPooler.GetObject("Player_Repeater");
+                newGun.GetComponent<Weapon>().level = getSubLevel(sub, weapon);
+                activeWeapon[(int)sub] =  WeaponType.REPEATER;
+                break;
+
+            case WeaponType.SHOTGUN:
+                newGun = ObjectPooler.GetObject("Player_ShotGun");
+                newGun.GetComponent<Weapon>().level = getSubLevel(sub, weapon);
+                activeWeapon[(int)sub] = WeaponType.SHOTGUN;
                 break;
 
             default:
@@ -144,9 +174,75 @@ public class PlayerManager : MonoBehaviour {
         ObjectPooler.PoolObject(gunPoint.transform.GetChild(0).gameObject);
 
         //Set New Gun
-        newGun.transform.SetParent(gunPoint.transform);
+        newGun.transform.parent = gunPoint.transform;
+        newGun.transform.localPosition = Vector3.zero;
+        newGun.transform.localScale = Vector3.one;
+        newGun.transform.localRotation = Quaternion.Euler(Vector3.zero);
+
+        player.weapons[(int)sub] = newGun.GetComponent<Weapon>();
+        player.PropagateTag(player.transform);
     }
 
 
+    public float getUpgradeCost(Subsystem sub, WeaponType weapon)
+    {
+        int subLevel = 0;
+        float upCost = 0;
+
+        if (weapon != WeaponType.NONE)
+        {
+            subLevel = weaponsLevels[(int)weapon, (int)sub];
+            upCost = weaponUpgradeCosts[(int)weapon];
+        }
+        else
+        {
+            subLevel = subLevels[(int)sub];
+            upCost = upgradeCosts[(int)sub];
+        }
+
+        if (subLevel == 0) return upCost * 10; //Entry cost
+        else return Mathf.Pow(upCost, subLevel);
+    }
+
+    private void updatePlayer(Subsystem sub, WeaponType weapon)
+    {
+        switch (sub)
+        {
+            case Subsystem.GUN_MAIN:
+                getPlayerWeaponByName("GunPoint_Main").level =
+                    getSubLevel(sub, weapon);
+                break;
+            case Subsystem.GUN_TLEFT:
+                break;
+            case Subsystem.GUN_TRIGHT:
+                break;
+            case Subsystem.GUN_BLEFT:
+                break;
+            case Subsystem.GUN_BRIGHT:
+                break;
+            case Subsystem.SHIELD_DELAY:
+                break;
+            case Subsystem.SHIELD_RATE:
+                break;
+            case Subsystem.SHIELD_MAX:
+                break;
+            case Subsystem.HEALTH_MAX:
+                break;
+            case Subsystem.ENGINE:
+                player.speed = speed_Base * subLevels[(int)sub];
+                break;
+            default:
+                Debug.Log("Unknown Subsystem");
+                break;
+        }
+    }
+
+    private Weapon getPlayerWeaponByName(string name)
+    {
+        return player.transform
+                    .Find(name)
+                    .GetChild(0)
+                    .GetComponent<Weapon>();
+    }
 
 }

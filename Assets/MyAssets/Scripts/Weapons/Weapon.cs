@@ -6,6 +6,7 @@ public abstract class Weapon : MonoBehaviour, PoolableObject
 {
 	public float[] turretPattern;
 	public float reloadTime;
+    public int level;
 
 	private float nextShot = 0;
 	private int turretIndice = 0;

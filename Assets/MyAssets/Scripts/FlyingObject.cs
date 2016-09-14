@@ -7,7 +7,7 @@ using System.Collections;
 public abstract class FlyingObject : MonoBehaviour, PoolableObject, DamageableObject
 {
 	public Trajectory trajectory;
-	public int speed;
+	public float speed;
 
 	public int healthPool;
 

@@ -17,7 +17,7 @@ public abstract class Spaceship : FlyingObject
 		Reset ();
 	}
 
-	private void PropagateTag(Transform t)
+	public void PropagateTag(Transform t)
 	{
 		t.gameObject.tag = tag;
 		
