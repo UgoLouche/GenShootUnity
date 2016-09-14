@@ -13,7 +13,7 @@ Current state:
 
 
 
-*All 2D arts are not mine and freely available. If you see something here that shouldn't be publicly available, please contact me.*
+*Most of 2D arts are not mine and freely available. If you see something here that shouldn't be publicly available and/or wrongly credited, please contact me.*
 Credits:
 
 tsukiyomaru0 (http://cutstuff.net/forum/index.php?topic=5024.0)
