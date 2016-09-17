@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class LaserBolt : Bolt
+public class RegularBolt : Bolt
 {
 	//Basicaly, there is nothing more to do
 }

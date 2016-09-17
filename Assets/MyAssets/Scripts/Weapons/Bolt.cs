@@ -9,10 +9,30 @@ public abstract class Bolt : FlyingObject
 	public Weapon fragGun;
 	public int timeToLive;
 
+
+    //Properties
+    private int level_ = 1;
+
+    public virtual int level
+    {
+        get { return level_; }
+        set
+        {
+            level_ = value;
+            Color col = transform.GetChild(0).GetComponent<SpriteRenderer>().color;
+            col.b = 1 - 0.1f * value;
+            col.g = 1 - 0.1f * value;
+
+            transform.GetChild(0).GetComponent<SpriteRenderer>().color = col;
+
+            if (fragGun != null) fragGun.level = value;
+        }
+    }
+
 	/*** METHODS ***/
 	protected void InflictDamage(FlyingObject obj) 
 	{
-		obj.ReduceHp (damage);
+		if (level > 0) obj.ReduceHp (damage * (0.5f + level / 2f));
 	}
 
 	protected new void Reset() //Clean everything for use
@@ -25,7 +45,7 @@ public abstract class Bolt : FlyingObject
 		base.Reset ();
 	}
 
-	void OnEnable()
+	protected virtual void OnEnable()
 	{
 		if (timeToLive != -1) 
 			StartCoroutine ("EndOfLife");
@@ -44,13 +64,19 @@ public abstract class Bolt : FlyingObject
 			    || ( gameObject.CompareTag("Bolt_Enemy")  && fObj.gameObject.CompareTag("Player") ) )
 			{
 				InflictDamage (fObj);
-				Explode ();
+
+                if (fragGun != null)
+                {
+                    fragGun.Fire();
+                }
+
+                Explode ();
 			}
 		}
 
 	}
 
-	private IEnumerator EndOfLife()
+	protected IEnumerator EndOfLife()
 	{
 		yield return new WaitForSeconds (timeToLive);
 

@@ -9,14 +9,14 @@ public abstract class FlyingObject : MonoBehaviour, PoolableObject, DamageableOb
 	public Trajectory trajectory;
 	public float speed;
 
-	public int healthPool;
+	public float healthPool;
 
 	public GameObject explosion;
 
 	/*Private Fields*/
 	private int poolID = -1;
 
-	private int currentHp;
+	private float currentHp;
 
 	private bool isMoving = true; // Start/Stop the following of the trajectory
 	
@@ -53,7 +53,7 @@ public abstract class FlyingObject : MonoBehaviour, PoolableObject, DamageableOb
 	}
 
 	/*Return the number of Hp left*/
-	public int ReduceHp(int damage)
+	public float ReduceHp(float damage)
 	{
 		if (damage < 0) 
 			damage *= -1;
@@ -67,7 +67,7 @@ public abstract class FlyingObject : MonoBehaviour, PoolableObject, DamageableOb
 		return currentHp;
 	}
 
-    public int GetHealth()
+    public float GetHealth()
     {
         return currentHp;
     }
@@ -85,7 +85,7 @@ public abstract class FlyingObject : MonoBehaviour, PoolableObject, DamageableOb
 		ObjectPooler.PoolObject (gameObject);
 	}
 	
-	protected void Update() 									//It seems "better" to deal with trajectory here ...
+	protected virtual void Update() 									//It seems "better" to deal with trajectory here ...
 	{
 		if (isMoving && trajectory != null) 
 			StepMove ();

@@ -6,7 +6,6 @@ public abstract class Weapon : MonoBehaviour, PoolableObject
 {
 	public float[] turretPattern;
 	public float reloadTime;
-    public int level;
 
 	private float nextShot = 0;
 	private int turretIndice = 0;
@@ -14,22 +13,44 @@ public abstract class Weapon : MonoBehaviour, PoolableObject
     private int poolID = -1;
 
 
+    //Property
+    private int level_ = 0;
+
+    public virtual int level
+    {
+        get { return level_; }
+
+        set { level_ = value; }
+    }
+
+
 	public abstract void Fire();
 
 	protected void TagBolt(GameObject shot)
 	{
-		//Assign the right tag
-		if (gameObject.CompareTag ("Player"))
-			shot.gameObject.tag = "Bolt_Player";
-		else if (gameObject.CompareTag ("Enemy"))
-			shot.gameObject.tag = "Bolt_Enemy";
-		else
-			Debug.Log ("A bolt have been fired by an Tag-Unknown object. Tag: " 
-			           + gameObject.tag);
+        //Assign the right tag
+        if (gameObject.CompareTag("Player"))
+        {
+            shot.gameObject.tag = "Bolt_Player";
+
+            //Frag Bolts have child elements that are weapons and need proper tag
+            for (int i = 0; i < shot.transform.childCount; ++i)
+                shot.transform.GetChild(i).tag = "Player";
+        }
+        else if (gameObject.CompareTag("Enemy"))
+        {
+            shot.gameObject.tag = "Bolt_Enemy";
+            for (int i = 0; i < shot.transform.childCount; ++i)
+                shot.transform.GetChild(i).tag = "Enemy";
+        }
+        else
+            Debug.Log("A bolt have been fired by an Tag-Unknown object. Tag: "
+                       + gameObject.tag);
 
 		shot.transform.position = transform.position;
 		shot.transform.rotation = transform.rotation;
 		shot.transform.localScale = Vector3.one;
+        shot.GetComponent<Bolt>().level = level;
 	}
 
 
@@ -62,7 +83,7 @@ public abstract class Weapon : MonoBehaviour, PoolableObject
 			turretIndice %= turretPattern.Length;
 		}
 
-		transform.rotation = Quaternion.Euler (new Vector3 (0, 
+		transform.localRotation = Quaternion.Euler (new Vector3 (0, 
 		                                                    0, 
 		                                                    turretPattern [turretIndice = ++turretIndice % turretPattern.Length]
 		                                                    ) );

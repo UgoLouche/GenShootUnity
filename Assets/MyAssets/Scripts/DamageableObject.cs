@@ -1,6 +1,6 @@
 public interface DamageableObject
 {
-	int ReduceHp(int damage);
+	float ReduceHp(float damage);
 	void Explode();
 }
 
