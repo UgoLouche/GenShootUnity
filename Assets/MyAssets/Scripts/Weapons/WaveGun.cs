@@ -13,8 +13,11 @@ public class WaveGun : Weapon
         if (!IsReady())
             return;
 
-        GameObject shot = ObjectPooler.GetObject(ammo.gameObject.name);
+        GameObject shot = ObjectPooler.GetObject(ammo.gameObject.name, false); 
+		//Active start the TTL timer, but we need to tag the bolt first (and modify its level) before that 
+
         TagBolt(shot);
+		shot.SetActive (true);
 
         Reload();
         MoveTurret();

@@ -12,11 +12,11 @@ public class WaveBolt : Bolt
         {
             //First reset reload time to its 0 level
             if (base.level >= 1)
-                timeToLive = (int)(timeToLive / Mathf.Pow(1.1f, base.level - 1));
+                timeToLive = timeToLive / Mathf.Pow(1.1f, base.level - 1);
 
             //Then Set the new level
             if (value >= 1)
-                timeToLive = (int)(timeToLive *  Mathf.Pow(1.1f, value - 1));
+                timeToLive = timeToLive *  Mathf.Pow(1.1f, value - 1);
 
             base.level = value;
         }

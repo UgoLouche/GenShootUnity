@@ -7,7 +7,7 @@ public abstract class Bolt : FlyingObject
 	public int damage;
 
 	public Weapon fragGun;
-	public int timeToLive;
+	public float timeToLive;
 
 
     //Properties

@@ -84,7 +84,7 @@ public class ObjectPooler : MonoBehaviour {
 		return;
 	}
 
-	public static GameObject GetObject( string typeName ) 
+	public static GameObject GetObject( string typeName, bool activate = true ) 
 	{
 		bool matchFound = false;
 		int i;
@@ -128,7 +128,7 @@ public class ObjectPooler : MonoBehaviour {
 
 		//Hierarchy and enable stuff
 		ret.transform.parent = null; 
-		ret.SetActive (true);
+		if (activate)ret.SetActive (true);
 
 		return ret;
 	}
