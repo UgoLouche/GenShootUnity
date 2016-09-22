@@ -64,8 +64,10 @@ public class WaveScript : MonoBehaviour {
 			current.transform.rotation = Quaternion.Euler( new Vector3( 0, 0, spawnPositions[step].z) );
 
 			//Failsafe and force repropagation of tag
-			current.tag = "Enemy"; 
+			current.tag = "Enemy";
 			current.SetActive(true);
+            current.transform.parent = 
+                GameManager.GetInstance().EnemyManager.transform;
 
 			step++;
 		}

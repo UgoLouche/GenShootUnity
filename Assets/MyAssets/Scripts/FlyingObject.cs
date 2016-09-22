@@ -80,7 +80,7 @@ public abstract class FlyingObject : MonoBehaviour, PoolableObject, DamageableOb
 		newExplosion.transform.position = transform.position;
 		newExplosion.transform.rotation = transform.rotation;
 
-		OnExplode ();
+		OnExplode (newExplosion);
 
 		ObjectPooler.PoolObject (gameObject);
 	}
@@ -102,7 +102,7 @@ public abstract class FlyingObject : MonoBehaviour, PoolableObject, DamageableOb
 		trajectoryStep = -1;
 	}
 
-	protected virtual void OnExplode () //By default do nothing, not abstract because it is a hassle to force implementation in all subclasses
+	protected virtual void OnExplode (GameObject explosion = null) //By default do nothing, not abstract because it is a hassle to force implementation in all subclasses
 	{ }
 
 	private void OnEnable()

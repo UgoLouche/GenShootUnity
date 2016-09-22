@@ -12,7 +12,7 @@ public class EnemyShip : Spaceship
 		Fire ();
 	}
 
-	protected override void OnExplode()
+	protected override void OnExplode(GameObject explosion = null)
 	{
 		GameManager.GetInstance ().AddPoint (pointValue);
 		if (lootTable != null) lootTable.SpawnLoot (transform);

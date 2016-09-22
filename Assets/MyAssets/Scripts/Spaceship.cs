@@ -17,7 +17,7 @@ public abstract class Spaceship : FlyingObject
 		Reset ();
 
         foreach (Weapon w in weapons)
-            w.level = 10;
+            w.level = 1;
 	}
 
 	public void PropagateTag(Transform t)

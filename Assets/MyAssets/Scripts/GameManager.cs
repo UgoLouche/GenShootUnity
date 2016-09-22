@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour {
 	public float height;
 
     public MenuScript menuCanvas;
+
+    public GameObject EnemyManager;
 	
 	private float xMax, xMin, yMax, yMin;
 
