@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace GenShootUnity.Core.ObjectsPooler
+namespace GenShootUnity.Core.Services.ObjectsPooler
 {
     interface IObjectsPooler
     {

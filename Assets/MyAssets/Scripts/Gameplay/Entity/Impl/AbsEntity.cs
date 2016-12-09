@@ -1,6 +1,9 @@
 ﻿using System;
-using GenShootUnity.Core.ObjectsPooler;
+
 using UnityEngine;
+
+using GenShootUnity.Core.Services.ObjectsPooler;
+using GenShootUnity.Gameplay.Trajectories;
 
 namespace GenShootUnity.Gameplay.Entity
 {
@@ -8,15 +11,21 @@ namespace GenShootUnity.Gameplay.Entity
     abstract class AbsEntity : AbsExtMonoBehaviour, IMovableObject, IDamageableObject, IPoolableObject
     {
 
+        // Movable Object Fields.
+        [SerializeField]
+        private ITrajectory trajectory_ = null;
+        private int curr_step = 0;
+
         // Movable Object
-        void IMovableObject.Move(Vector3 newPos)
+        public void RawMove(Vector3 newPos)
         {
-            throw new NotImplementedException();
+            transform.position = newPos;
         }
 
-        void IMovableObject.StepMove()
+        public void StepMove()
         {
-            throw new NotImplementedException();
+            if (trajectory_ != null)
+                curr_step = trajectory_.Step(transform, curr_step);
         }
     }
 }
