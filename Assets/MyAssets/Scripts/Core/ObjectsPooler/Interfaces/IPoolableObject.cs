@@ -3,6 +3,9 @@
     interface IPoolableObject
     {
         // Each CLASS has a UNIQUE PoolID.
-        int PoolID { get; } 
+        int PoolID { get; }
+
+        // Pool "this".
+        void Pool();
     }
 }
