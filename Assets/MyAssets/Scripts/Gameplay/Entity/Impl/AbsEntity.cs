@@ -3,6 +3,7 @@
 using UnityEngine;
 
 using GenShootUnity.Core.Services.ObjectsPooler;
+using GenShootUnity.Core.Exceptions;
 using GenShootUnity.Gameplay.Trajectories;
 
 namespace GenShootUnity.Gameplay.Entity
@@ -55,7 +56,11 @@ namespace GenShootUnity.Gameplay.Entity
             if (trajectory_ != null)
             {
                 try { trajectory_.Bind(transform); }
-                catch (InvalidOperationException e) { Debug.Log(e.Message); trajectory_ = null; } // TODO : Do this properly and define your own exception for that case. Also Debug.Log().
+                catch (GameException e)
+                {
+                    if (Debug.isDebugBuild) Debug.Log(e.Message); // TODO : Test this Debug Syntax (and other ... this induces overhead even in release mode)
+                    trajectory_ = null;
+                }
             }
         }
 
