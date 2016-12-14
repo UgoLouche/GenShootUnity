@@ -3,8 +3,8 @@
 using UnityEngine;
 
 using GenShootUnity.Core.Services.ObjectsPooler;
-using GenShootUnity.Core.Exceptions;
 using GenShootUnity.Gameplay.Trajectories;
+using GenShootUnity.ScriptableObj.Trajectories;
 
 namespace GenShootUnity.Gameplay.Entity
 {
@@ -14,7 +14,8 @@ namespace GenShootUnity.Gameplay.Entity
 
         // Movable Object Fields.
         [SerializeField]
-        private ITrajectory trajectory_ = null;
+        private Trajectory trajectory_ = null;
+        private ITrajectoryHandler trajectoryHandler = null;
         [SerializeField]
         private float speed_ = 0;
 
@@ -25,7 +26,13 @@ namespace GenShootUnity.Gameplay.Entity
             get { return speed_; }
             set { speed_ = value; }
         }
-       
+
+        public Trajectory Trajectory
+        {
+            get { return trajectory_; }
+            set { trajectory_ = value; }
+        }
+
         public virtual void Move(Directions dir, float deltaT) // TODO: Player ship need to override this to ensure ship stay within camera FOV.
         {
             Vector3 moveVector = Vector3.zero;
@@ -45,31 +52,53 @@ namespace GenShootUnity.Gameplay.Entity
 
         public void StepMove(float deltaT)
         {
-            if (trajectory_ != null)
-                trajectory_.Step(Speed, deltaT);
+            if (Trajectory != null)
+                trajectoryHandler.Step(Speed, deltaT);
         }
 
 
         // Unity Methods
         protected virtual void OnEnable()
         {
-            if (trajectory_ != null)
+            if (Trajectory != null)
             {
-                try { trajectory_.Bind(transform); }
-                catch (GameException e)
-                {
-                    if (Debug.isDebugBuild) Debug.Log(e.Message); // TODO : Test this Debug Syntax (and other ... this induces overhead even in release mode)
-                    trajectory_ = null;
-                }
+                trajectoryHandler = ServiceProvider.GameFactory.NewTrajectoryHandler();
+                trajectoryHandler.Bind(transform, Trajectory);
             }
         }
 
         protected virtual void OnDisable()
         {
-            if (trajectory_ != null)
+            if (Trajectory != null)
             {
-                trajectory_.Unbind();
+                trajectoryHandler.Unbind();
+                trajectoryHandler = null;
             }
+        }
+
+
+        // Default Implementations.
+        int IPoolableObject.PoolID
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        void IDamageableObject.TakeDamage(float damage)
+        {
+            throw new NotImplementedException();
+        }
+
+        void IDamageableObject.Explode()
+        {
+            throw new NotImplementedException();
+        }
+
+        void IPoolableObject.Pool()
+        {
+            throw new NotImplementedException();
         }
     }
 }

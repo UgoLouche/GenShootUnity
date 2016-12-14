@@ -1,8 +1,8 @@
-using UnityEngine;
-using System.Collections;
+//using UnityEngine;
+//using System.Collections;
 
-public class RegularBolt : Bolt
-{
-	//Basicaly, there is nothing more to do
-}
+//public class RegularBolt : Bolt
+//{
+//	//Basicaly, there is nothing more to do
+//}
 

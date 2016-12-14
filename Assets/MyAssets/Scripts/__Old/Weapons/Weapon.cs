@@ -1,101 +1,101 @@
-using UnityEngine;
-using System.Collections;
-using System;
+//using UnityEngine;
+//using System.Collections;
+//using System;
 
-public abstract class Weapon : MonoBehaviour, PoolableObject
-{
-	public float[] turretPattern;
-	public float reloadTime;
+//public abstract class Weapon : MonoBehaviour, PoolableObject
+//{
+//	public float[] turretPattern;
+//	public float reloadTime;
 
-	private float nextShot = 0;
-	private int turretIndice = 0;
+//	private float nextShot = 0;
+//	private int turretIndice = 0;
 
-    private int poolID = -1;
-
-
-    //Property
-    private int level_ = 0;
-
-    public virtual int level
-    {
-        get { return level_; }
-
-        set { level_ = value; }
-    }
+//    private int poolID = -1;
 
 
-	public abstract void Fire();
+//    //Property
+//    private int level_ = 0;
 
-	protected void TagBolt(GameObject shot)
-	{
-        //Assign the right tag
-        if (gameObject.CompareTag("Player"))
-        {
-            shot.gameObject.tag = "Bolt_Player";
+//    public virtual int level
+//    {
+//        get { return level_; }
 
-            //Frag Bolts have child elements that are weapons and need proper tag
-            for (int i = 0; i < shot.transform.childCount; ++i)
-                shot.transform.GetChild(i).tag = "Player";
-        }
-        else if (gameObject.CompareTag("Enemy"))
-        {
-            shot.gameObject.tag = "Bolt_Enemy";
-            for (int i = 0; i < shot.transform.childCount; ++i)
-                shot.transform.GetChild(i).tag = "Enemy";
-        }
-        else
-            Debug.Log("A bolt have been fired by an Tag-Unknown object. Tag: "
-                       + gameObject.tag);
-
-		shot.transform.position = transform.position;
-		shot.transform.rotation = transform.rotation;
-		shot.transform.localScale = Vector3.one;
-        shot.GetComponent<Bolt>().level = level;
-	}
+//        set { level_ = value; }
+//    }
 
 
-	protected bool IsReady()
-	{
-		if (Time.time >= nextShot)
-			return true;
-		else
-			return false;
-	}
+//	public abstract void Fire();
 
-	protected void Reload()
-	{
-		nextShot = Time.time + reloadTime;
-	}
+//	protected void TagBolt(GameObject shot)
+//	{
+//        //Assign the right tag
+//        if (gameObject.CompareTag("Player"))
+//        {
+//            shot.gameObject.tag = "Bolt_Player";
 
-	protected void MoveTurret()
-	{
-		if (turretPattern.Length == 0) //SafeGuard, should not happen
-		{
-			Debug.Log ("Weapon: Empty Turret pattern");
-			turretPattern = new float[1];
-			turretPattern[0] = 0;
-			turretIndice = 0;
-		}
+//            //Frag Bolts have child elements that are weapons and need proper tag
+//            for (int i = 0; i < shot.transform.childCount; ++i)
+//                shot.transform.GetChild(i).tag = "Player";
+//        }
+//        else if (gameObject.CompareTag("Enemy"))
+//        {
+//            shot.gameObject.tag = "Bolt_Enemy";
+//            for (int i = 0; i < shot.transform.childCount; ++i)
+//                shot.transform.GetChild(i).tag = "Enemy";
+//        }
+//        else
+//            Debug.Log("A bolt have been fired by an Tag-Unknown object. Tag: "
+//                       + gameObject.tag);
 
-		if (turretIndice > turretPattern.Length - 1)  //SafeGuard
-		{
-			Debug.Log("Weapon: turretIndice out of bound (turretIndice: " + turretIndice + ")");
-			turretIndice %= turretPattern.Length;
-		}
+//		shot.transform.position = transform.position;
+//		shot.transform.rotation = transform.rotation;
+//		shot.transform.localScale = Vector3.one;
+//        shot.GetComponent<Bolt>().level = level;
+//	}
 
-		transform.localRotation = Quaternion.Euler (new Vector3 (0, 
-		                                                    0, 
-		                                                    turretPattern [turretIndice = ++turretIndice % turretPattern.Length]
-		                                                    ) );
-		//Debug.Log ("---" + turretPattern [turretIndice % turretPattern.Length] + "---" + turretIndice);
-	}
 
-    public int GetPoolID()
-    {
-        if (poolID == -1)
-            ObjectPooler.RequestID(this.gameObject);
+//	protected bool IsReady()
+//	{
+//		if (Time.time >= nextShot)
+//			return true;
+//		else
+//			return false;
+//	}
 
-        return poolID;
-    }
-}
+//	protected void Reload()
+//	{
+//		nextShot = Time.time + reloadTime;
+//	}
+
+//	protected void MoveTurret()
+//	{
+//		if (turretPattern.Length == 0) //SafeGuard, should not happen
+//		{
+//			Debug.Log ("Weapon: Empty Turret pattern");
+//			turretPattern = new float[1];
+//			turretPattern[0] = 0;
+//			turretIndice = 0;
+//		}
+
+//		if (turretIndice > turretPattern.Length - 1)  //SafeGuard
+//		{
+//			Debug.Log("Weapon: turretIndice out of bound (turretIndice: " + turretIndice + ")");
+//			turretIndice %= turretPattern.Length;
+//		}
+
+//		transform.localRotation = Quaternion.Euler (new Vector3 (0, 
+//		                                                    0, 
+//		                                                    turretPattern [turretIndice = ++turretIndice % turretPattern.Length]
+//		                                                    ) );
+//		//Debug.Log ("---" + turretPattern [turretIndice % turretPattern.Length] + "---" + turretIndice);
+//	}
+
+//    public int GetPoolID()
+//    {
+//        if (poolID == -1)
+//            ObjectPooler.RequestID(this.gameObject);
+
+//        return poolID;
+//    }
+//}
 

@@ -4,6 +4,7 @@ namespace GenShootUnity.Core.Services
 {
     interface IServicesProvider
     {
-        IObjectsPooler ObjectPooler();
+        IObjectsPooler ObjectPooler { get; }
+        IGameFactory GameFactory { get; }
     }
 }

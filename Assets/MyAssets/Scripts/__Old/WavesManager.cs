@@ -1,46 +1,46 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿//using UnityEngine;
+//using System.Collections;
 
-public class WavesManager : MonoBehaviour {
+//public class WavesManager : MonoBehaviour {
 
-	public static WavesManager instance = null;
+//	public static WavesManager instance = null;
 
-	public GameObject currentWave = null;
+//	public GameObject currentWave = null;
 
-	void Awake()
-	{
-		if (instance != null)
-			Debug.Log("Another instance of WavesManager already exists !");
+//	void Awake()
+//	{
+//		if (instance != null)
+//			Debug.Log("Another instance of WavesManager already exists !");
 
-		instance = this;
-	}
+//		instance = this;
+//	}
 	
-	void Start () 
-	{
-		StartCoroutine("MainCoroutine");
-	}
+//	void Start () 
+//	{
+//		StartCoroutine("MainCoroutine");
+//	}
 
-	IEnumerator MainCoroutine()
-	{
-		WaveScript currentCopy;
+//	IEnumerator MainCoroutine()
+//	{
+//		WaveScript currentCopy;
 
-		yield return new WaitForSeconds(2); //Wait two second before starting
+//		yield return new WaitForSeconds(2); //Wait two second before starting
 
-		while (currentWave != null) 
-		{
-			currentCopy = ObjectPooler.GetObject(currentWave.name).GetComponent<MonoBehaviour>() as WaveScript;
-			if (currentCopy == null)
-				Debug.Log("WavesManager: cannot get wave: " + currentWave.name);
+//		while (currentWave != null) 
+//		{
+//			currentCopy = ObjectPooler.GetObject(currentWave.name).GetComponent<MonoBehaviour>() as WaveScript;
+//			if (currentCopy == null)
+//				Debug.Log("WavesManager: cannot get wave: " + currentWave.name);
 
-			currentCopy.transform.parent = transform;
-			currentCopy.Run();
+//			currentCopy.transform.parent = transform;
+//			currentCopy.Run();
 
-			yield return new WaitForSeconds( currentCopy.lockUpTime );
+//			yield return new WaitForSeconds( currentCopy.lockUpTime );
 
-			//Prepare next Wave
-			currentWave = currentCopy.nextWave;
-		}
+//			//Prepare next Wave
+//			currentWave = currentCopy.nextWave;
+//		}
 
-		Debug.Log ("The End");
-	}
-}
+//		Debug.Log ("The End");
+//	}
+//}

@@ -1,6 +1,6 @@
-public interface DamageableObject
-{
-	float ReduceHp(float damage);
-	void Explode();
-}
+//public interface DamageableObject
+//{
+//	float ReduceHp(float damage);
+//	void Explode();
+//}
 

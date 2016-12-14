@@ -1,6 +1,6 @@
 ﻿using System;
 
-using UnityEngine;
+using GenShootUnity.ScriptableObj.Trajectories;
 
 namespace GenShootUnity.Gameplay.Entity
 {
@@ -16,6 +16,7 @@ namespace GenShootUnity.Gameplay.Entity
     interface IMovableObject
     {
         float Speed { get; set; }
+        Trajectory Trajectory { get; set; }
 
         void Move(Directions dir, float deltaT);
         void StepMove(float deltaT);
