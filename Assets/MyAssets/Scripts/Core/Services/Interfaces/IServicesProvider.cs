@@ -1,8 +1,9 @@
-﻿using GenShootUnity.Core.Services.ObjectsPooler;
+﻿using GenShootUnity.Core.Initializable;
+using GenShootUnity.Core.Services.ObjectsPooler;
 
 namespace GenShootUnity.Core.Services
 {
-    interface IServicesProvider
+    interface IServicesProvider : IInitializable
     {
         IObjectsPooler ObjectPooler { get; }
         IGameFactory GameFactory { get; }

@@ -76,6 +76,11 @@ namespace GenShootUnity.Gameplay.Entity
             }
         }
 
+        protected virtual void Update()
+        {
+            if (Trajectory != null) StepMove(Time.deltaTime);
+        }
+
 
         // Default Implementations.
         int IPoolableObject.PoolID

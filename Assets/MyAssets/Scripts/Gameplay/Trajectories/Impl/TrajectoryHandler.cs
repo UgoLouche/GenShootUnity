@@ -19,7 +19,7 @@ namespace GenShootUnity.Gameplay.Trajectories
 
         public void Bind(Transform entityTransform, Trajectory trajectory)
         {
-            if (trajectory == null && transform == null)
+            if (this.trajectory == null && transform == null)
             {
                 this.trajectory = trajectory;
                 transform = entityTransform;
@@ -89,7 +89,7 @@ namespace GenShootUnity.Gameplay.Trajectories
             // Wrap up update step tracking and recall Step() if needed.
             if (timeToStepEnd == 0)
             {
-                step++;
+                step = (step + 1) % trajectory.Steps.Length;
                 timeToStepEnd = 1;
 
                 if (remaining_deltaT > 0)
