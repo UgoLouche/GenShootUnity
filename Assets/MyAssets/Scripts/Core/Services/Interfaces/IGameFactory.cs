@@ -1,4 +1,5 @@
 ﻿using GenShootUnity.Core.Initializable;
+using GenShootUnity.Core.Services.ObjectsPooler;
 using GenShootUnity.Gameplay.Trajectories;
 
 
@@ -8,6 +9,10 @@ namespace GenShootUnity.Core.Services
     // Allow for centralized implementations details
     interface IGameFactory : IInitializable
     {
+        // Trajectory.
         ITrajectoryHandler NewTrajectoryHandler();
+
+        // Object Pooler
+        IObjectsPool NewObjectsPool();
     }
 }

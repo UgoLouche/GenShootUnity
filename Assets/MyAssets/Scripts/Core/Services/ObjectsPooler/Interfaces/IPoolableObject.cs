@@ -2,8 +2,8 @@
 {
     interface IPoolableObject
     {
-        // Each CLASS has a UNIQUE PoolID.
-        int PoolID { get; }
+        // Pool Cache if the object went through a pool already.
+        IObjectsPool ParentPool { get; }
 
         // Pool "this".
         void Pool();

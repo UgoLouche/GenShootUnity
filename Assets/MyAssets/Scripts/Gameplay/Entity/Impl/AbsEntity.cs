@@ -83,14 +83,6 @@ namespace GenShootUnity.Gameplay.Entity
 
 
         // Default Implementations.
-        int IPoolableObject.PoolID
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-
         void IDamageableObject.TakeDamage(float damage)
         {
             throw new NotImplementedException();
@@ -105,5 +97,7 @@ namespace GenShootUnity.Gameplay.Entity
         {
             throw new NotImplementedException();
         }
+
+        public IObjectsPool ParentPool { get { throw new NotImplementedException(); } }
     }
 }

@@ -3,6 +3,9 @@
 using GenShootUnity.Core.GameManager;
 using GenShootUnity.Core.Services;
 
+// Implementation Details.
+using GameManagerImpl = GenShootUnity.Core.GameManager.GameManager;
+
 namespace GenShootUnity.Gameplay.Entity
 {
     // Add some functionality to MonoBehaviour.
@@ -16,7 +19,7 @@ namespace GenShootUnity.Gameplay.Entity
         {
             get
             {
-                if (gameManager_ == null) gameManager_ = Core.GameManager.GameManager.Instance;
+                if (gameManager_ == null) gameManager_ = GameManagerImpl.Instance;
 
                 return gameManager_;
             }
