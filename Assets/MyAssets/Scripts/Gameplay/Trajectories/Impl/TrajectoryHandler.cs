@@ -77,9 +77,7 @@ namespace GenShootUnity.Gameplay.Trajectories
             curr_deltaT /= trajectory.Steps[step].StepLenght;
 
             // Modify Transform
-            transform.position += new Vector3(trajectory.Steps[step].X_off * curr_deltaT,
-                                              trajectory.Steps[step].Y_off * curr_deltaT,
-                                              trajectory.Steps[step].Z_off * curr_deltaT);
+            transform.position += transform.up * trajectory.Steps[step].Fwd_off * curr_deltaT;
 
             transform.Rotate(new Vector3(0, 0, 1) * trajectory.Steps[step].Theta_off * curr_deltaT);
 
