@@ -1,8 +1,10 @@
 ﻿using GenShootUnity.Core.Initializable;
 using GenShootUnity.Gameplay.Trajectories;
+using GenShootUnity.Core.Services.ObjectsPooler;
 
 //Implementation Details.
 using TrajectoryHandlerImpl = GenShootUnity.Gameplay.Trajectories.TrajectoryHandler;
+using ObjectPoolsImpl = GenShootUnity.Core.Services.ObjectsPooler.ObjectsPool;
 
 namespace GenShootUnity.Core.Services
 {
@@ -13,6 +15,11 @@ namespace GenShootUnity.Core.Services
         {
             return new TrajectoryHandlerImpl();
         }
+
+		public IObjectsPool NewObjectsPool()
+		{
+			return new ObjectPoolsImpl();
+		}
 
         // AbsInitializable.
         override protected bool InitProcedure()

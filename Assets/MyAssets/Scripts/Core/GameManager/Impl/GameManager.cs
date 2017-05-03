@@ -31,10 +31,12 @@ namespace GenShootUnity.Core.GameManager
 
         // Non-Singleton Code.
         private IServicesProvider serviceProvider = null;
+		[SerializeField]
+		private ScriptableObj.ObjectsPooler.InitialPoolList initialPoolList= null;
 
 
         // IGameManager.
-        IServicesProvider IGameManager.GetServiceProvider()
+        public IServicesProvider GetServiceProvider()
         {
             return serviceProvider;
         }
@@ -54,7 +56,24 @@ namespace GenShootUnity.Core.GameManager
             serviceProvider = new ServiceProviderImpl();
             serviceProvider.Initialize();
 
-            if (Debug.isDebugBuild && !serviceProvider.Initialized) Debug.Log("Service provider failed to initialize."); // TODO: Debug Code bookmark.
+
+			if (!serviceProvider.Initialized) 
+			{
+				if (Debug.isDebugBuild)
+					Debug.Log ("Service provider failed to initialize."); // TODO: Debug Code bookmark. 
+			} 
+			else 
+			{
+				if (serviceProvider.ObjectPooler.Initialized && initialPoolList != null) 
+				{
+					GameObject pooler = new GameObject ();
+					pooler.transform.parent = this.transform;
+					serviceProvider.ObjectPooler.SetPoolsRoot (pooler);
+
+					foreach (GameObject obj in initialPoolList.prefabs)
+						serviceProvider.ObjectPooler.PoolObject (obj, true);
+				}
+			}
         }
     }
 }

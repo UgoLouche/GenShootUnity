@@ -5,6 +5,7 @@ using GenShootUnity.Core.Services.ObjectsPooler;
 
 // Implementation Details.
 using GameFactoryImpl = GenShootUnity.Core.Services.GameFactory;
+using ObjectPoolerImpl = GenShootUnity.Core.Services.ObjectsPooler.ObjectPooler;
 
 namespace GenShootUnity.Core.Services
 {
@@ -30,7 +31,17 @@ namespace GenShootUnity.Core.Services
             GameFactory.Initialize();
 
             initFlag = initFlag && GameFactory.Initialized;
-            if (Debug.isDebugBuild && !GameFactory.Initialized) Debug.Log("GameFactory Initialization failed."); // TODO: Debug code bookmark.
+            if (Debug.isDebugBuild && !GameFactory.Initialized) 
+				Debug.Log("GameFactory Initialization failed."); // TODO: Debug code bookmark.
+
+
+			// ObjectPooler
+			objectPooler_ = new ObjectPoolerImpl();
+			ObjectPooler.Initialize();
+
+			initFlag = initFlag && ObjectPooler.Initialized;
+			if (Debug.isDebugBuild && !ObjectPooler.Initialized)
+				Debug.Log ("ObjectPooler Initialization failed"); //TODO: Debug code bookmark. 
 
 
             return initFlag;

@@ -14,8 +14,10 @@ namespace GenShootUnity.Core.Services.ObjectsPooler
         GameObject[] GetObject(AbsEntity prefab, int nb_copies);
         GameObject[] GetObject(GameObject prefab, int nb_copies);
 
-        void PoolObject(GameObject obj);
-        void PoolObject(AbsEntity obj);
+		// Special call for prefabs because you need to duplicate the object first.
+		// Default this second argument in implementation ?
+		void PoolObject(GameObject obj, bool prefab = false);
+		void PoolObject(AbsEntity obj);
 
         void SetPoolsRoot(GameObject poolsRoot);
     }

@@ -33,7 +33,29 @@ namespace GenShootUnity.Core.Services.ObjectsPooler
 
 
         // GetObject methods.
-        GameObject[] GetObject(string name, int nb_copies)
+		public GameObject GetObject(string name)
+		{
+			return GetObject (name, 1)[0];
+		}
+		public GameObject GetObject(AbsEntity prefab)
+		{
+			return GetObject (prefab, 1)[0];
+		}
+		public GameObject GetObject(GameObject prefab)
+		{
+			return GetObject (prefab, 1)[0];
+		}
+		public GameObject[] GetObject(AbsEntity prefab, int nb_copies)
+		{
+			return GetObject (prefab.gameObject.name, nb_copies);
+		}
+
+		public GameObject[] GetObject(GameObject prefab, int nb_copies)
+		{
+			return GetObject (prefab.name, nb_copies);
+		}
+
+        public GameObject[] GetObject(string name, int nb_copies)
         {
             GameObject[] ret = new GameObject[nb_copies];
 
@@ -53,7 +75,7 @@ namespace GenShootUnity.Core.Services.ObjectsPooler
 
 
         // PoolObject methods.
-        void PoolObject(AbsEntity obj)
+		public void PoolObject(AbsEntity obj)
         {
             IObjectsPool selected_Pool = GetPool(obj);
             if (selected_Pool == null)
@@ -70,8 +92,17 @@ namespace GenShootUnity.Core.Services.ObjectsPooler
             selected_Pool.PoolObject(obj);
         }
 
-        void PoolObject(GameObject obj)
+		public void PoolObject(GameObject obj, bool prefab = false)
         {
+			// If prefab create a copy of the object.
+			// /!\ change name as unity will call it "copy_of_XXX" or something.  
+			if (prefab) 
+			{
+				string name = obj.name;
+				obj = GameObject.Instantiate (obj);
+				obj.name = name;
+			}
+
             AbsEntity absEnt = obj.GetComponent<AbsEntity>();
 
             if (absEnt == null)
@@ -81,6 +112,19 @@ namespace GenShootUnity.Core.Services.ObjectsPooler
             else
                 PoolObject(absEnt);
         }
+
+		public void SetPoolsRoot(GameObject poolsRoot)
+		{
+			pools_root = poolsRoot;
+		}
+
+
+		// Protected. 
+		protected override bool InitProcedure()
+		{
+			// Is there anything to do here ?
+			return false;
+		}
 
 
         // Ad-Hoc Functions.
