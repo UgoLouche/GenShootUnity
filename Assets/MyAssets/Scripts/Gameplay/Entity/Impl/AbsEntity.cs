@@ -56,6 +56,29 @@ namespace GenShootUnity.Gameplay.Entity
                 trajectoryHandler.Step(Speed, deltaT);
         }
 
+		// IPoolable methods
+		public void Pool()
+		{
+			Pool_custom ();
+
+			if (ParentPool == null) {
+				ServiceProvider.ObjectPooler.PoolObject (this);
+			} 
+			else 
+			{
+				ParentPool.PoolObject (this);
+			}
+		}
+
+		// Custom pool subroutine... For customization purpose. 
+		// Reset transform by default.
+		protected virtual void Pool_custom()
+		{
+			transform.localPosition = Vector3.zero;
+			transform.localRotation = Quaternion.identity;
+			transform.localScale = Vector3.one;
+		}
+
 
         // Unity Methods
         protected virtual void OnEnable()
@@ -83,20 +106,25 @@ namespace GenShootUnity.Gameplay.Entity
 
 
         // Default Implementations.
-        void IDamageableObject.TakeDamage(float damage)
+        public void TakeDamage(float damage)
         {
             throw new NotImplementedException();
         }
 
-        void IDamageableObject.Explode()
+        public void Explode()
         {
             throw new NotImplementedException();
         }
 
-        void IPoolableObject.Pool()
-        {
-            throw new NotImplementedException();
-        }
+		public virtual void Notify_enterPool(IObjectsPool pool)
+		{
+			throw new NotImplementedException ();
+		}
+
+		public virtual void Notify_leavePool()
+		{
+			throw new NotImplementedException ();	
+		}
 
         public IObjectsPool ParentPool { get { throw new NotImplementedException(); } }
     }

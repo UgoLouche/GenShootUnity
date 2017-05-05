@@ -11,6 +11,12 @@ namespace GenShootUnity.Core.Services.ObjectsPooler
 
         void PoolObject(AbsEntity obj);
 
-        void Initialize(string name, GameObject root, int size = 10); //SubRoot creation is done here.
+        void Initialize(string name, GameObject root); //SubRoot creation is done here.
+
+		// Fill the pool
+		// The pool will automatically make a copy of the first object pooled for Filling purpose and prefab is ignored.
+		// On a completely new pool, you must provide a valid prefab.
+		// Return the number of created objects
+		int FillPool (int size, GameObject prefab = null); 
     }
 }
