@@ -123,7 +123,7 @@ namespace GenShootUnity.Core.Services.ObjectsPooler
 		protected override bool InitProcedure()
 		{
 			// Is there anything to do here ?
-			return false;
+			return true;
 		}
 
 

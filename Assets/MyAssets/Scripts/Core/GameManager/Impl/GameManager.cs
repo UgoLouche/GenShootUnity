@@ -64,14 +64,18 @@ namespace GenShootUnity.Core.GameManager
 			} 
 			else 
 			{
-				if (serviceProvider.ObjectPooler.Initialized && initialPoolList != null) 
+				if (serviceProvider.ObjectPooler.Initialized) 
 				{
 					GameObject pooler = new GameObject ();
+					pooler.name = "Objects Pooler";
 					pooler.transform.parent = this.transform;
 					serviceProvider.ObjectPooler.SetPoolsRoot (pooler);
 
-					foreach (GameObject obj in initialPoolList.prefabs)
-						serviceProvider.ObjectPooler.PoolObject (obj, true);
+					if (initialPoolList != null) 
+					{
+						foreach (GameObject obj in initialPoolList.prefabs)
+							serviceProvider.ObjectPooler.PoolObject (obj, true);
+					}
 				}
 			}
         }
