@@ -30,6 +30,7 @@ namespace GenShootUnity.Core.Services.ObjectsPooler
 			{
 				referenceCopy = GameObject.Instantiate (obj.gameObject).GetComponent<AbsEntity> ();
 				referenceCopy.gameObject.name = obj.gameObject.name;
+				referenceCopy.transform.parent = root.transform;
 			}
 				
 			objects.Push (obj);

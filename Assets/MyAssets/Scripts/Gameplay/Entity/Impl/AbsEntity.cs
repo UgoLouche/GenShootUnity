@@ -19,6 +19,9 @@ namespace GenShootUnity.Gameplay.Entity
         [SerializeField]
         private float speed_ = 0;
 
+		// POolable Object fields
+		private IObjectsPool parentPool_ = null;
+
 
         // IMovableObject
         public float Speed
@@ -57,6 +60,19 @@ namespace GenShootUnity.Gameplay.Entity
         }
 
 		// IPoolable methods
+		public IObjectsPool ParentPool { get { return parentPool_; } }
+
+		public virtual void Notify_enterPool(IObjectsPool pool)
+		{
+			if (ParentPool == null)
+				parentPool_ = pool;
+		}
+
+		public virtual void Notify_leavePool()
+		{
+			//Is there anything to do here ?	
+		}
+
 		public void Pool()
 		{
 			Pool_custom ();
@@ -115,17 +131,5 @@ namespace GenShootUnity.Gameplay.Entity
         {
             throw new NotImplementedException();
         }
-
-		public virtual void Notify_enterPool(IObjectsPool pool)
-		{
-			throw new NotImplementedException ();
-		}
-
-		public virtual void Notify_leavePool()
-		{
-			throw new NotImplementedException ();	
-		}
-
-        public IObjectsPool ParentPool { get { throw new NotImplementedException(); } }
     }
 }
