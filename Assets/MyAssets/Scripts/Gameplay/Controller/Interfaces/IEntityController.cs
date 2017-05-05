@@ -1,6 +1,6 @@
 ﻿namespace GenShootUnity.Gameplay.Controller
 {
-    interface IEntityController
-    {
+	interface IEntityController<ControlledType> where ControlledType : IControlledEntity
+	{
     }
 }
