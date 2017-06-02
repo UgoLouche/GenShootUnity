@@ -1,6 +1,6 @@
 ﻿namespace GenShootUnity.Gameplay.Subsystem.Weapons
 {
-    interface IWeapon
+    public interface IWeapon
     {
         IAmmo Ammo { get; set; }
 

@@ -9,7 +9,7 @@ using GenShootUnity.ScriptableObj.Trajectories;
 namespace GenShootUnity.Gameplay.Entity
 {
     // Everything related to Game Logic is likely an entity
-    abstract class AbsEntity : AbsExtMonoBehaviour, IMovableObject, IDamageableObject, IPoolableObject
+    public abstract class AbsEntity : AbsExtMonoBehaviour, IMovableObject, IDamageableObject, IPoolableObject
     {
 
         // Movable Object Fields.
@@ -87,15 +87,25 @@ namespace GenShootUnity.Gameplay.Entity
 		}
 
 		// Custom pool subroutine... For customization purpose. 
-		// Reset transform by default.
+		// Reset transform by default and Heal.
 		protected virtual void Pool_custom()
 		{
 			transform.localPosition = Vector3.zero;
 			transform.localRotation = Quaternion.identity;
 			transform.localScale = Vector3.one;
+
+			Heal ();
 		}
 
 
+		//IDamageable
+		//By default, only pool the object
+		//Might want to add explosion here or in AbsSpaceship. 
+		public void Explode()
+		{
+			Pool ();
+		}
+			
         // Unity Methods
         protected virtual void OnEnable()
         {
@@ -122,14 +132,9 @@ namespace GenShootUnity.Gameplay.Entity
 
 
         // Default Implementations.
-        public void TakeDamage(float damage)
-        {
-            throw new NotImplementedException();
-        }
+		public abstract void TakeDamage(float damage);
 
-        public void Explode()
-        {
-            throw new NotImplementedException();
-        }
+		public abstract void Heal();
+		public abstract void Heal(float amount);
     }
 }

@@ -7,7 +7,7 @@ namespace GenShootUnity.Core.Services
 {
     // General Purpose Factory for Game classes
     // Allow for centralized implementations details
-    interface IGameFactory : IInitializable
+    public interface IGameFactory : IInitializable
     {
         // Trajectory.
         ITrajectoryHandler NewTrajectoryHandler();

@@ -1,6 +1,8 @@
-﻿namespace GenShootUnity.Gameplay.Subsystem.Defense
+﻿using GenShootUnity.Gameplay.Entity;
+
+namespace GenShootUnity.Gameplay.Subsystem.Defense
 { 
-    interface IShield
+	public interface IShield : IDamageableObject
     {
         float Value { get; }
 

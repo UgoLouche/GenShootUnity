@@ -1,9 +1,12 @@
 ﻿
 namespace GenShootUnity.Gameplay.Entity
 {
-    interface IDamageableObject
+    public interface IDamageableObject
     {
         void TakeDamage(float damage);
         void Explode();
+
+		void Heal();
+		void Heal(float amount);
     }
 }

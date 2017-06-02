@@ -8,6 +8,19 @@ namespace Assets.MyAssets.Scripts.Gameplay.Entity.Impl
 
 		private float currentTTL = 0;
 
+
+		public override void TakeDamage(float damage)
+		{
+		}
+
+		public override void Heal(float amount) 
+		{
+		}
+
+		public override void Heal()
+		{
+		}
+
 		protected override void Update()
 		{
 			base.Update ();

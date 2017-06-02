@@ -1,6 +1,6 @@
 ﻿namespace GenShootUnity.Core.Initializable
 {
-    interface IInitializable
+    public interface IInitializable
     {
         bool Initialized { get; }
 

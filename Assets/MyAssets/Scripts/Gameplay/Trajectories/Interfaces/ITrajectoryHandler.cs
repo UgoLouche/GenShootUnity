@@ -12,7 +12,7 @@ namespace GenShootUnity.Gameplay.Trajectories
      * Once binded to a transform and a trajectory each subsequent call to Step will
      * change the transform according to the trajectory.
      */
-    interface ITrajectoryHandler
+    public interface ITrajectoryHandler
     {
         void Step(float speed, float deltaT);
 

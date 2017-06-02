@@ -9,7 +9,7 @@ using GameManagerImpl = GenShootUnity.Core.GameManager.GameManager;
 namespace GenShootUnity.Gameplay.Entity
 {
     // Add some functionality to MonoBehaviour.
-    abstract class AbsExtMonoBehaviour : MonoBehaviour
+    public abstract class AbsExtMonoBehaviour : MonoBehaviour
     {
         // Define a bunch of shortcut properties for child classes.
         private IGameManager gameManager_ = null;

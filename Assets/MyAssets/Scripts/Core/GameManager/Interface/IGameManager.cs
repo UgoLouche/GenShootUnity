@@ -3,7 +3,7 @@
 namespace GenShootUnity.Core.GameManager
 {
     // God-level object.
-    interface IGameManager
+    public interface IGameManager
     {
         IServicesProvider GetServiceProvider();
     }

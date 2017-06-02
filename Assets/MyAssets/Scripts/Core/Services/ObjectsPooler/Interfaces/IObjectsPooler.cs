@@ -5,7 +5,7 @@ using GenShootUnity.Gameplay.Entity;
 
 namespace GenShootUnity.Core.Services.ObjectsPooler
 {
-    interface IObjectsPooler : IInitializable
+    public interface IObjectsPooler : IInitializable
     {
         GameObject GetObject(string name);
         GameObject GetObject(AbsEntity prefab);
